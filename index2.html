@@ -12,16 +12,19 @@
 
 <style>
 /* ==========================================================================
-   BEYOND STUDIOS — alternate layout, modelled on the Nevverland design system.
-   Edit colours and fonts in :root only.
+   BEYOND STUDIOS — elevated layout. Broadcast-console identity, lifted with
+   motion, depth and interaction. Edit colours and fonts in :root only.
    ========================================================================== */
 :root{
   --ink:#0F1F33;
+  --ink-2:#0C1A2B;
   --console:#16293F;
+  --console-2:#1A3047;
   --console-edge:#26394F;
   --signal:#F0BE1E;
+  --signal-deep:#D9A810;
   --teal:#46969F;
-  --onair:#B43232;
+  --onair:#D9534A;
   --card:#F0E4CC;
   --card-edge:#D8C9A8;
   --card-ink:#12243C;
@@ -30,6 +33,7 @@
   --muted:#8B96A8;
   --muted-dark:#6D7889;
   --maxw:1120px;
+  --ease:cubic-bezier(.22,.61,.36,1);
 
   --font-display:'Bricolage Grotesque',system-ui,sans-serif;
   --font-body:'Instrument Sans',system-ui,sans-serif;
@@ -41,119 +45,164 @@ html{scroll-behavior:smooth}
 body{
   background:var(--ink);color:var(--text);
   font-family:var(--font-body);font-size:16px;line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
 img,video{display:block;max-width:100%}
 a{color:inherit}
 
+/* ---------- scroll progress ---------- */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;
+  background:linear-gradient(90deg,var(--signal),var(--teal));transition:width .1s linear}
+
 /* ---------- type ---------- */
 h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;letter-spacing:-.025em;line-height:1.04}
-.label{font-family:var(--font-data);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--signal)}
+.label{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-data);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--signal)}
+.label::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 0 rgba(240,190,30,.5);animation:pulse 2.4s var(--ease) infinite}
+.label.t::before{background:var(--teal);animation:none}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(240,190,30,.45)}70%{box-shadow:0 0 0 7px rgba(240,190,30,0)}100%{box-shadow:0 0 0 0 rgba(240,190,30,0)}}
 .lede{font-size:18px;color:var(--text-dim);max-width:56ch}
 .motto{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--signal);letter-spacing:-.01em;margin:10px 0 14px}
-.hero .motto{font-size:17px;margin:0 0 8px}
+.hero .motto{font-size:17px;margin:0 0 10px}
 
 /* ---------- masthead ---------- */
-.masthead{border-bottom:1px solid var(--console-edge);position:sticky;top:0;z-index:50;background:rgba(15,31,51,.94);backdrop-filter:blur(10px)}
-.masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:18px;padding-bottom:18px}
+.masthead{border-bottom:1px solid var(--console-edge);position:sticky;top:0;z-index:50;background:rgba(15,31,51,.82);backdrop-filter:blur(14px) saturate(1.2)}
+.masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:16px;padding-bottom:16px}
 .wordmark{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
 .wordmark span{color:var(--signal)}
 .nav{display:flex;align-items:center;gap:26px}
-.nav a{font-size:14px;text-decoration:none;color:var(--text-dim);transition:color .15s ease}
-.nav a:hover,.nav a[aria-current="page"]{color:var(--signal)}
-.navtoggle{display:none;background:none;border:1px solid var(--console-edge);color:var(--text);border-radius:2px;padding:8px 12px;cursor:pointer;font-family:var(--font-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.nav a{position:relative;font-size:14px;text-decoration:none;color:var(--text-dim);transition:color .15s ease}
+.nav a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:1.5px;background:var(--signal);transition:right .25s var(--ease)}
+.nav a:hover{color:var(--text)}
+.nav a:hover::after{right:0}
+.navtoggle{display:none;background:none;border:1px solid var(--console-edge);color:var(--text);border-radius:3px;padding:8px 12px;cursor:pointer;font-family:var(--font-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
 
 /* ---------- buttons ---------- */
-.btn{display:inline-block;text-decoration:none;border:1px solid transparent;border-radius:2px;font-family:var(--font-data);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:15px 26px;cursor:pointer;transition:opacity .15s ease,background .15s ease}
-.btn-solid{background:var(--signal);color:#12243C}
-.btn-solid:hover{opacity:.85}
+.btn{position:relative;display:inline-flex;align-items:center;gap:9px;text-decoration:none;border:1px solid transparent;border-radius:3px;font-family:var(--font-data);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:15px 24px;cursor:pointer;transition:transform .2s var(--ease),background .2s var(--ease),box-shadow .2s var(--ease),border-color .2s var(--ease)}
+.btn:hover{transform:translateY(-2px)}
+.btn .arw{transition:transform .25s var(--ease)}
+.btn:hover .arw{transform:translateX(4px)}
+.btn-solid{background:var(--signal);color:#12243C;box-shadow:0 6px 20px -10px rgba(240,190,30,.8)}
+.btn-solid:hover{background:var(--signal-deep);box-shadow:0 12px 28px -10px rgba(240,190,30,.7)}
 .btn-line{border-color:var(--console-edge);color:var(--text)}
-.btn-line:hover{background:var(--console)}
+.btn-line:hover{background:var(--console);border-color:var(--muted)}
 .btns{display:flex;gap:12px;flex-wrap:wrap}
 a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 
 /* ---------- media ---------- */
-.media{position:relative;overflow:hidden;border-radius:3px;background:var(--console);border:1px solid var(--console-edge)}
-.media img,.media video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border:0}
+.media{position:relative;overflow:hidden;border-radius:4px;background:var(--console);border:1px solid var(--console-edge)}
+.media img,.media video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border:0;transition:transform .7s var(--ease)}
 .media.r-16x9{aspect-ratio:16/9}
 .media.r-4x3{aspect-ratio:4/3}
-.focus-18{object-position:50% 18%}
-.focus-23{object-position:50% 23%}
-.focus-35{object-position:50% 35%}
+.mtag{position:absolute;left:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:8px;background:rgba(12,22,40,.78);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.08);font-family:var(--font-data);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text);padding:7px 11px;border-radius:3px}
+.mtag i{width:7px;height:7px;border-radius:50%;display:inline-block}
 
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--console-edge)}
-.hero-media{position:absolute;inset:0;z-index:0}
-.hero-media img{width:100%;height:100%;object-fit:cover;opacity:.34}
-.hero-media::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(15,31,51,.74) 0%,rgba(15,31,51,.56) 45%,rgba(15,31,51,.96) 100%)}
-.hero .wrap{position:relative;z-index:3;padding-top:96px;padding-bottom:88px}
-.hero h1{font-size:clamp(38px,6.6vw,72px);max-width:16ch;margin:16px 0 22px}
+.hero-media{position:absolute;inset:-8% 0;z-index:0;will-change:transform}
+.hero-media img{width:100%;height:100%;object-fit:cover;opacity:.32}
+.hero-media::before{content:"";position:absolute;inset:0;z-index:2;background:
+  radial-gradient(120% 90% at 78% 15%,rgba(70,150,159,.18),transparent 55%),
+  linear-gradient(180deg,rgba(15,31,51,.72) 0%,rgba(15,31,51,.52) 42%,rgba(12,22,40,.97) 100%)}
+.hero .wrap{position:relative;z-index:3;padding-top:104px;padding-bottom:90px}
+.hero h1{font-size:clamp(40px,7vw,78px);max-width:15ch;margin:16px 0 22px}
 .hero h1 em{font-style:normal;color:var(--signal)}
 .hero .btns{margin-top:34px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border-top:1px solid var(--console-edge);padding-top:22px;max-width:620px}
+.hero-meta div{padding-right:30px;margin-right:30px;border-right:1px solid var(--console-edge)}
+.hero-meta div:last-child{border:none;padding:0;margin:0}
+.hero-meta strong{display:block;font-family:var(--font-data);font-weight:600;font-size:21px;color:var(--signal);letter-spacing:-.03em}
+.hero-meta span{display:block;font-family:var(--font-data);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:6px}
 
 /* ---------- sections ---------- */
-.section{padding:64px 0;border-top:1px solid var(--console-edge)}
+.section{padding:72px 0;border-top:1px solid var(--console-edge);position:relative}
 .section:first-of-type{border-top:none}
-.section-head{margin-bottom:38px}
-.section-head h2{font-size:clamp(25px,3.6vw,36px);margin-top:12px}
+.section-head{margin-bottom:40px}
+.section-head h2{font-size:clamp(26px,3.8vw,38px);margin-top:12px}
 .section-head p{color:var(--muted);max-width:58ch;margin-top:11px;font-size:15px}
 
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
 /* ---------- split ---------- */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
 .split.wide-left{grid-template-columns:1.15fr 1fr}
 .split h2{font-size:clamp(25px,3.6vw,36px);margin:12px 0 18px}
 .split p{color:var(--text-dim);margin-bottom:14px}
 
 /* ---------- two path cards ---------- */
 .paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.path{background:var(--console);border:1px solid var(--console-edge);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s ease}
-.path:hover{border-color:var(--signal)}
+.path{background:linear-gradient(180deg,var(--console-2),var(--console));border:1px solid var(--console-edge);border-radius:5px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease)}
+.path:hover{border-color:var(--signal);transform:translateY(-4px);box-shadow:0 24px 48px -28px rgba(0,0,0,.8)}
+.path:hover .media img{transform:scale(1.05)}
+.path .media{border:none;border-radius:0}
 .path-body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
 .path h3{font-size:24px;margin:10px 0 10px}
-.path p{color:var(--text-dim);font-size:15px;flex:1;margin-bottom:20px}
+.path p{color:var(--text-dim);font-size:15px;flex:1;margin-bottom:22px}
 .path .btn{align-self:flex-start}
 
 /* ---------- rooms grid ---------- */
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.grid3 h4,.tile h4{font-size:17px;margin:14px 0 4px}
+.rm .media{margin-bottom:14px}
+.rm:hover .media img{transform:scale(1.06)}
+.grid3 h4,.tile h4{font-size:17px;margin:0 0 4px}
 .tile{text-decoration:none;display:block}
+.tile:hover .media img{transform:scale(1.05)}
+.tile h4{margin-top:14px;transition:color .2s ease}
+.tile:hover h4{color:var(--signal)}
 .tile p{font-size:13.5px;color:var(--muted)}
 
+/* ---------- stats band ---------- */
+.stats{background:
+  linear-gradient(180deg,var(--console-2),var(--console));
+  border:1px solid var(--console-edge);border-radius:6px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;overflow:hidden}
+.stat{padding:34px 26px;border-right:1px solid var(--console-edge)}
+.stat:last-child{border-right:none}
+.stat b{display:block;font-family:var(--font-data);font-weight:600;font-size:clamp(30px,4vw,42px);letter-spacing:-.04em;color:var(--signal);line-height:1}
+.stat span{display:block;font-family:var(--font-data);font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:12px}
+
 /* ---------- featured client band ---------- */
-.feature{background:var(--console);border:1px solid var(--console-edge);border-radius:3px;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr}
-.feature-body{padding:44px 40px 40px;display:flex;flex-direction:column;justify-content:center}
+.feature{background:linear-gradient(180deg,var(--console-2),var(--console));border:1px solid var(--console-edge);border-radius:6px;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr}
+.feature-body{padding:46px 42px 42px;display:flex;flex-direction:column;justify-content:center}
 .feature h2{font-size:clamp(26px,3.5vw,40px);margin:14px 0 20px;letter-spacing:-.03em}
 .feature h2 em{font-style:normal;color:var(--signal)}
 .feature p{color:var(--text-dim);font-size:15.5px;margin-bottom:14px;max-width:46ch}
 .feature .media{border:none;border-radius:0;min-height:100%}
-.feature-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:26px;border-top:1px solid var(--console-edge);padding-top:22px}
+.feature:hover .media img{transform:scale(1.04)}
+.feature-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:28px;border-top:1px solid var(--console-edge);padding-top:24px}
 .feature-stats div{padding-right:34px;margin-right:34px;border-right:1px solid var(--console-edge)}
 .feature-stats div:last-child{border-right:none;padding-right:0;margin-right:0}
 .feature-stats strong{display:block;font-family:var(--font-data);font-weight:600;font-size:19px;color:var(--signal);letter-spacing:-.03em}
 .feature-stats span{display:block;font-family:var(--font-data);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-dark);margin-top:6px}
 
-/* ---------- roster ---------- */
-.roster{display:flex;flex-wrap:wrap;gap:10px 0;align-items:center;border-top:1px solid var(--console-edge);border-bottom:1px solid var(--console-edge);padding:20px 0}
-.roster span{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--text-dim);padding:0 22px;border-right:1px solid var(--console-edge);white-space:nowrap}
-.roster span:first-child{padding-left:0}
-.roster span:last-child{border-right:none}
+/* ---------- roster marquee ---------- */
+.roster{position:relative;border-top:1px solid var(--console-edge);border-bottom:1px solid var(--console-edge);overflow:hidden;padding:22px 0;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.roster-track{display:flex;gap:0;width:max-content;animation:marq 28s linear infinite}
+.roster span{font-family:var(--font-display);font-weight:600;font-size:16px;color:var(--text-dim);padding:0 30px;border-right:1px solid var(--console-edge);white-space:nowrap}
+@keyframes marq{to{transform:translateX(-50%)}}
+.roster:hover .roster-track{animation-play-state:paused}
 
 /* ---------- cta band ---------- */
-.cta{border-top:1px solid var(--console-edge);padding:66px 0 72px;text-align:center}
-.cta h2{font-size:clamp(26px,4.2vw,42px);margin:14px auto 16px;max-width:19ch}
+.cta{border-top:1px solid var(--console-edge);padding:74px 0 80px;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(60% 120% at 50% 0%,rgba(240,190,30,.1),transparent 60%)}
+.cta .wrap{position:relative;z-index:1}
+.cta h2{font-size:clamp(28px,4.4vw,46px);margin:14px auto 16px;max-width:19ch}
 .cta p{color:var(--muted);margin-bottom:28px}
 .cta .btns{justify-content:center}
 
 /* ---------- footer ---------- */
-.foot{border-top:1px solid var(--console-edge);padding:48px 0 20px}
+.foot{border-top:1px solid var(--console-edge);padding:52px 0 22px;background:var(--ink-2)}
 .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
 .foot h4{font-family:var(--font-data);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-.foot a{display:block;text-decoration:none;color:var(--text-dim);font-size:14.5px;padding:4px 0}
-.foot a:hover{color:var(--signal)}
+.foot a{display:block;text-decoration:none;color:var(--text-dim);font-size:14.5px;padding:4px 0;transition:color .15s ease,transform .15s ease}
+.foot a:hover{color:var(--signal);transform:translateX(3px)}
 .foot p{color:var(--text-dim);font-size:14.5px}
-.colophon{margin-top:44px;padding-top:20px;border-top:1px solid var(--console-edge);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-dark)}
+.colophon{margin-top:46px;padding-top:20px;border-top:1px solid var(--console-edge);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-dark)}
 
 /* ---------- utilities ---------- */
 .mt-l{margin-top:34px}
@@ -164,80 +213,97 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
   .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ink);border-bottom:1px solid var(--console-edge);padding:8px 28px 20px}
   .nav.open{display:flex}
   .nav a{padding:12px 0;border-bottom:1px solid var(--console-edge)}
+  .nav a::after{display:none}
   .navtoggle{display:block}
   .masthead .wrap{position:relative}
   .split,.split.wide-left,.paths,.grid3,.grid2,.foot-grid{grid-template-columns:1fr}
-  .split{gap:28px}
-  .hero .wrap{padding-top:64px;padding-bottom:60px}
-  .section{padding:48px 0}
+  .split{gap:30px}
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--console-edge)}
+  .hero .wrap{padding-top:72px;padding-bottom:64px}
+  .section{padding:52px 0}
   .feature{grid-template-columns:1fr}
   .feature-body{padding:30px 24px 32px;order:2}
   .feature .media{order:1;aspect-ratio:16/9;min-height:0}
   .feature-stats div{padding-right:20px;margin-right:20px}
-  .roster span{padding:0 14px 0 0;border-right:none;font-size:14px}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .hero-media{inset:0}
+}
 </style>
 </head>
 <body>
+
+<div class="progress" id="progress"></div>
 
 <header class="masthead">
   <div class="wrap">
     <a class="wordmark" href="/">BEYOND <span>STUDIOS</span></a>
     <button class="navtoggle" aria-expanded="false" aria-controls="nav">Menu</button>
     <nav class="nav" id="nav">
-      <a href="#booths">Photo Booths</a>
+      <a href="#paths">Photo Booths</a>
       <a href="#studio">Studio Hire</a>
       <a href="#work">Video</a>
       <a href="#work">Work</a>
-      <a href="#about">About</a>
+      <a href="#contact">About</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
 
 <section class="hero">
-  <div class="hero-media">
+  <div class="hero-media" id="heroMedia">
     <img src="img/hero.png" alt="">
   </div>
   <div class="wrap">
-    <p class="motto">Where great moments never fade.</p>
-    <p class="label">Vancouver, British Columbia</p>
-    <h1>Don't let the moment <em>slip away</em>.</h1>
-    <p class="lede">Book a photo booth, hire the space, or hand us the whole production. A Vancouver studio built for people who need to keep making memories.</p>
-    <div class="btns">
-      <a class="btn btn-solid" href="#booths">Book a photo booth</a>
+    <p class="motto rv in">Where great moments never fade.</p>
+    <p class="label rv in d1">Vancouver, British Columbia</p>
+    <h1 class="rv in d1">Don't let the moment <em>slip away</em>.</h1>
+    <p class="lede rv in d2">Book a photo booth, hire the space, or hand us the whole production. A Vancouver studio built for people who need to keep making memories.</p>
+    <div class="btns rv in d2">
+      <a class="btn btn-solid" href="#paths">Book a photo booth <span class="arw">&rarr;</span></a>
       <a class="btn btn-line" href="#studio">Hire the studio</a>
+    </div>
+    <div class="hero-meta rv in d3">
+      <div><strong>500+</strong><span>Events staffed</span></div>
+      <div><strong>3</strong><span>Signature booths</span></div>
+      <div><strong>Same&nbsp;week</strong><span>Delivery</span></div>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="paths">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head rv">
       <p class="label">Two ways in</p>
       <h2>What are you here for?</h2>
     </div>
 
     <div class="paths">
-      <article class="path">
+      <article class="path rv">
         <div class="media r-16x9">
           <img src="img/_edited.avif" alt="A 360 video booth session in full swing" loading="lazy">
+          <span class="mtag"><i style="background:var(--onair)"></i>360 live</span>
         </div>
         <div class="path-body">
           <p class="label">Photo booths</p>
           <h3>Rent a booth</h3>
           <p>Classic print, luxury portrait and immersive 360 video booths that take on your brand: your colour wash, your logo on the prints, your backdrop. An attendant runs the whole session. Weekly slots across the Lower Mainland.</p>
-          <a class="btn btn-solid" href="#booths">See booth packages</a>
+          <a class="btn btn-solid" href="#paths">See booth packages <span class="arw">&rarr;</span></a>
         </div>
       </article>
 
-      <article class="path">
+      <article class="path rv d1">
         <div class="media r-16x9">
           <img src="img/d59383_d3fb8f2b41984f3a8b66968a7f3fe2ee~mv2.avif" alt="The main studio dressed for a portrait shoot" loading="lazy">
+          <span class="mtag"><i style="background:var(--teal)"></i>Studio</span>
         </div>
         <div class="path-body">
-          <p class="label">Studio hire</p>
+          <p class="label t">Studio hire</p>
           <h3>Book the space</h3>
           <p>Paper backdrops, a full lighting kit, props and a change room, all in one room. Bring your camera and shoot. Book online in about a minute, or add on-the-day coverage while you are at it.</p>
           <a class="btn btn-line" href="#studio">See rates and availability</a>
@@ -250,14 +316,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
 <section class="section">
   <div class="wrap">
     <div class="split wide-left">
-      <div>
+      <div class="rv">
         <p class="label">Why it is set up this way</p>
-        <h2 style="font-size:clamp(25px,3.6vw,36px);margin:12px 0 18px">Events never run unattended.</h2>
-        <p style="color:var(--text-dim);margin-bottom:14px">A booth at a wedding cannot be redone. If a printer jams, a camera drifts or a strip comes out wrong, the night is already over and the moment is gone for good.</p>
-        <p style="color:var(--text-dim);margin-bottom:14px">So every booth booking has an attendant on site. They set it up, keep the line moving, catch the problem before it becomes one and pack it down afterwards.</p>
-        <p style="color:var(--text-dim)">Studio hire works differently. You are welcome to run it yourself with the full lighting kit included, or ask for a technician and we will confirm availability.</p>
+        <h2>Events never run unattended.</h2>
+        <p>A booth at a wedding cannot be redone. If a printer jams, a camera drifts or a strip comes out wrong, the night is already over and the moment is gone for good.</p>
+        <p>So every booth booking has an attendant on site. They set it up, keep the line moving, catch the problem before it becomes one and pack it down afterwards.</p>
+        <p style="margin-bottom:0">Studio hire works differently. You are welcome to run it yourself with the full lighting kit included, or ask for a technician and we will confirm availability.</p>
       </div>
-      <div class="media r-4x3">
+      <div class="media r-4x3 rv d1">
         <img src="img/BeyondStudios-464.avif" alt="An attendant setting up the booth before an event" loading="lazy">
       </div>
     </div>
@@ -266,30 +332,33 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
 
 <section class="section">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head rv">
       <p class="label">The booths</p>
       <h2>Three booths, one studio</h2>
       <p>Everything runs from one studio in Vancouver, with the gear rigged and ready and a team that travels to your venue across Metro Vancouver.</p>
     </div>
 
     <div class="grid3">
-      <div>
+      <div class="rm rv">
         <div class="media r-4x3">
           <img src="img/d59383_5e117e356e8145f7a5f028fd640efa2a~mv2.avif" alt="The classic print booth" loading="lazy">
+          <span class="mtag"><i style="background:var(--signal)"></i>Classic</span>
         </div>
         <h4>Classic print booth</h4>
         <p style="font-size:13.5px;color:var(--muted)">Open-air setup, instant high-quality prints and a bank of props. The crowd-pleaser for weddings and parties.</p>
       </div>
-      <div>
+      <div class="rm rv d1">
         <div class="media r-4x3">
           <img src="img/_edited (1).avif" alt="The luxury portrait booth" loading="lazy">
+          <span class="mtag"><i style="background:var(--teal)"></i>Portrait</span>
         </div>
         <h4>Portrait print booth</h4>
         <p style="font-size:13.5px;color:var(--muted)">A glam beauty filter, studio lighting and timeless portraits in vibrant colour or classic black and white.</p>
       </div>
-      <div>
+      <div class="rm rv d2">
         <div class="media r-4x3">
           <img src="img/d59383_54c3c43fa64b4d76a6d98b32eb3e3d97~mv2.avif" alt="The 360 video booth" loading="lazy">
+          <span class="mtag"><i style="background:var(--onair)"></i>360 video</span>
         </div>
         <h4>360 video booth</h4>
         <p style="font-size:13.5px;color:var(--muted)">A slow-motion spinning stage built for brand activations and the kind of clip guests post before they leave.</p>
@@ -298,9 +367,20 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
   </div>
 </section>
 
+<section class="section">
+  <div class="wrap">
+    <div class="stats rv" id="stats">
+      <div class="stat"><b data-count="500" data-suffix="+">0</b><span>Events staffed</span></div>
+      <div class="stat"><b data-count="40000" data-suffix="+">0</b><span>Prints handed out</span></div>
+      <div class="stat"><b data-count="7" data-suffix=" yrs">0</b><span>Across Metro Van</span></div>
+      <div class="stat"><b data-count="100" data-suffix="%">0</b><span>Staffed bookings</span></div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="booths">
   <div class="wrap">
-    <div class="feature">
+    <div class="feature rv">
       <div class="feature-body">
         <p class="label">Featured activation</p>
         <h2>The booth behind <em>sold-out</em> brand launches.</h2>
@@ -321,38 +401,36 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
 </section>
 
 <section class="section">
-  <div class="wrap">
+  <div class="wrap rv">
     <p class="label" style="margin-bottom:20px">Trusted by</p>
-    <div class="roster">
-      <span>Atelier</span>
-      <span>Maison&nbsp;Co</span>
-      <span>Lumi&egrave;re</span>
-      <span>The&nbsp;Veranda</span>
-      <span>Noir&nbsp;Events</span>
-      <span>Grandview</span>
+  </div>
+  <div class="roster rv">
+    <div class="roster-track">
+      <span>Atelier</span><span>Maison&nbsp;Co</span><span>Lumi&egrave;re</span><span>The&nbsp;Veranda</span><span>Noir&nbsp;Events</span><span>Grandview</span><span>S&eacute;raphine</span><span>Harbour&nbsp;&amp;&nbsp;Co</span>
+      <span>Atelier</span><span>Maison&nbsp;Co</span><span>Lumi&egrave;re</span><span>The&nbsp;Veranda</span><span>Noir&nbsp;Events</span><span>Grandview</span><span>S&eacute;raphine</span><span>Harbour&nbsp;&amp;&nbsp;Co</span>
     </div>
-    <div class="btns mt-l">
-      <a class="btn btn-line" href="#work">See the events we have shot</a>
-    </div>
+  </div>
+  <div class="wrap rv d1">
+    <div class="btns mt-l"><a class="btn btn-line" href="#work">See the events we have shot <span class="arw">&rarr;</span></a></div>
   </div>
 </section>
 
 <section class="section" id="work">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head rv">
       <p class="label">Selected work</p>
       <h2>Weddings, parties and brand activations</h2>
       <p>Real events shot in our booths and our studio, printed on the night and delivered the same week.</p>
     </div>
     <div class="grid2">
-      <a class="tile" href="#contact">
+      <a class="tile rv" href="#contact">
         <div class="media r-16x9">
           <img src="img/d59383_5e117e356e8145f7a5f028fd640efa2a~mv2.avif" alt="A wedding couple at the booth" loading="lazy">
         </div>
         <h4>The Shing Wedding</h4>
         <p>Classic booth &amp; portrait prints</p>
       </a>
-      <a class="tile" href="#contact">
+      <a class="tile rv d1" href="#contact">
         <div class="media r-16x9">
           <img src="img/_edited.avif" alt="A 360 booth brand launch" loading="lazy">
         </div>
@@ -360,19 +438,17 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
         <p>360 video booth activation</p>
       </a>
     </div>
-    <div class="btns mt-l">
-      <a class="btn btn-line" href="#contact">See all work</a>
-    </div>
+    <div class="btns mt-l rv"><a class="btn btn-line" href="#contact">See all work</a></div>
   </div>
 </section>
 
 <section class="cta" id="studio">
   <div class="wrap">
-    <p class="label">Come and have a look</p>
-    <h2>The studio makes more sense in person</h2>
-    <p>Book a call, or come by and we will show you around.</p>
-    <div class="btns">
-      <a class="btn btn-solid" href="#contact">Get in touch</a>
+    <p class="label rv" style="justify-content:center">Come and have a look</p>
+    <h2 class="rv">The studio makes more sense in person</h2>
+    <p class="rv d1">Book a call, or come by and we will show you around.</p>
+    <div class="btns rv d1">
+      <a class="btn btn-solid" href="#contact">Get in touch <span class="arw">&rarr;</span></a>
       <a class="btn btn-line" href="tel:+16040000000">Call the studio</a>
     </div>
   </div>
@@ -389,14 +465,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
       </div>
       <div>
         <h4>Services</h4>
-        <a href="#booths">Photo booth rental</a>
+        <a href="#paths">Photo booth rental</a>
         <a href="#studio">Studio hire</a>
         <a href="#work">Video production</a>
         <a href="#work">Work</a>
       </div>
       <div>
         <h4>Studio</h4>
-        <a href="#about">About</a>
+        <a href="#contact">About</a>
         <a href="#contact">Contact</a>
         <a href="#contact">Instagram</a>
         <p style="font-size:13.5px;color:var(--muted);margin-top:12px">Vancouver<br>British Columbia</p>
@@ -411,11 +487,50 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-off
 </footer>
 
 <script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* mobile nav */
   var t=document.querySelector('.navtoggle'),n=document.getElementById('nav');
-  t.addEventListener('click',function(){
-    var open=n.classList.toggle('open');
-    t.setAttribute('aria-expanded',open);
-  });
+  t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o);});
+  n.addEventListener('click',function(e){if(e.target.tagName==='A'){n.classList.remove('open');t.setAttribute('aria-expanded',false);}});
+
+  /* scroll progress + hero parallax */
+  var prog=document.getElementById('progress'),hm=document.getElementById('heroMedia');
+  function onScroll(){
+    var h=document.documentElement.scrollHeight-innerHeight, y=scrollY;
+    prog.style.width=(h>0?(y/h)*100:0)+'%';
+    if(hm && !reduce && y<innerHeight) hm.style.transform='translateY('+(y*0.18)+'px)';
+  }
+  var tick=false;
+  addEventListener('scroll',function(){if(!tick){requestAnimationFrame(function(){onScroll();tick=false;});tick=true;}},{passive:true});
+  onScroll();
+
+  /* reveal on scroll */
+  var rv=document.querySelectorAll('.rv:not(.in)');
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    rv.forEach(function(el){io.observe(el);});
+  } else { rv.forEach(function(el){el.classList.add('in');}); }
+
+  /* count-up stats */
+  var stats=document.getElementById('stats');
+  function runCounts(){
+    stats.querySelectorAll('[data-count]').forEach(function(el){
+      var target=+el.getAttribute('data-count'), suf=el.getAttribute('data-suffix')||'', dur=1400, t0=null;
+      function fmt(v){return v>=10000?Math.round(v/1000)+'k':(''+v);}
+      if(reduce){el.textContent=fmt(target)+suf;return;}
+      function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1),e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(target*e))+suf;if(p<1)requestAnimationFrame(step);}
+      requestAnimationFrame(step);
+    });
+  }
+  if(stats){
+    if('IntersectionObserver' in window){
+      var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){runCounts();so.disconnect();}});},{threshold:.4});
+      so.observe(stats);
+    } else runCounts();
+  }
+})();
 </script>
 </body>
 </html>

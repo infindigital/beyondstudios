@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beyond Studios | Photo Booths, Studio Hire & Video Production in Vancouver</title>
+<meta name="description" content="A staffed photo booth, photography studio hire and commercial video production in Vancouver. An attendant is included in every booth booking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0F1F33">
+
+<style>
+/* ==========================================================================
+   BEYOND STUDIOS — alternate layout, modelled on the Nevverland design system.
+   Edit colours and fonts in :root only.
+   ========================================================================== */
+:root{
+  --ink:#0F1F33;
+  --console:#16293F;
+  --console-edge:#26394F;
+  --signal:#F0BE1E;
+  --teal:#46969F;
+  --onair:#B43232;
+  --card:#F0E4CC;
+  --card-edge:#D8C9A8;
+  --card-ink:#12243C;
+  --text:#EDE7DA;
+  --text-dim:#BAC2CE;
+  --muted:#8B96A8;
+  --muted-dark:#6D7889;
+  --maxw:1120px;
+
+  --font-display:'Bricolage Grotesque',system-ui,sans-serif;
+  --font-body:'Instrument Sans',system-ui,sans-serif;
+  --font-data:'Martian Mono',ui-monospace,monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:800;letter-spacing:-.025em;line-height:1.04}
+.label{font-family:var(--font-data);font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--signal)}
+.lede{font-size:18px;color:var(--text-dim);max-width:56ch}
+.motto{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--signal);letter-spacing:-.01em;margin:10px 0 14px}
+.hero .motto{font-size:17px;margin:0 0 8px}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:1px solid var(--console-edge);position:sticky;top:0;z-index:50;background:rgba(15,31,51,.94);backdrop-filter:blur(10px)}
+.masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:18px;padding-bottom:18px}
+.wordmark{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+.wordmark span{color:var(--signal)}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a{font-size:14px;text-decoration:none;color:var(--text-dim);transition:color .15s ease}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--signal)}
+.navtoggle{display:none;background:none;border:1px solid var(--console-edge);color:var(--text);border-radius:2px;padding:8px 12px;cursor:pointer;font-family:var(--font-data);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-block;text-decoration:none;border:1px solid transparent;border-radius:2px;font-family:var(--font-data);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;padding:15px 26px;cursor:pointer;transition:opacity .15s ease,background .15s ease}
+.btn-solid{background:var(--signal);color:#12243C}
+.btn-solid:hover{opacity:.85}
+.btn-line{border-color:var(--console-edge);color:var(--text)}
+.btn-line:hover{background:var(--console)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+a:focus-visible,button:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+/* ---------- media ---------- */
+.media{position:relative;overflow:hidden;border-radius:3px;background:var(--console);border:1px solid var(--console-edge)}
+.media img,.media video{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;border:0}
+.media.r-16x9{aspect-ratio:16/9}
+.media.r-4x3{aspect-ratio:4/3}
+.focus-18{object-position:50% 18%}
+.focus-23{object-position:50% 23%}
+.focus-35{object-position:50% 35%}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--console-edge)}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;opacity:.34}
+.hero-media::before{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(15,31,51,.74) 0%,rgba(15,31,51,.56) 45%,rgba(15,31,51,.96) 100%)}
+.hero .wrap{position:relative;z-index:3;padding-top:96px;padding-bottom:88px}
+.hero h1{font-size:clamp(38px,6.6vw,72px);max-width:16ch;margin:16px 0 22px}
+.hero h1 em{font-style:normal;color:var(--signal)}
+.hero .btns{margin-top:34px}
+
+/* ---------- sections ---------- */
+.section{padding:64px 0;border-top:1px solid var(--console-edge)}
+.section:first-of-type{border-top:none}
+.section-head{margin-bottom:38px}
+.section-head h2{font-size:clamp(25px,3.6vw,36px);margin-top:12px}
+.section-head p{color:var(--muted);max-width:58ch;margin-top:11px;font-size:15px}
+
+/* ---------- split ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.split.wide-left{grid-template-columns:1.15fr 1fr}
+.split h2{font-size:clamp(25px,3.6vw,36px);margin:12px 0 18px}
+.split p{color:var(--text-dim);margin-bottom:14px}
+
+/* ---------- two path cards ---------- */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.path{background:var(--console);border:1px solid var(--console-edge);border-radius:3px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .18s ease}
+.path:hover{border-color:var(--signal)}
+.path-body{padding:26px 24px 28px;display:flex;flex-direction:column;flex:1}
+.path h3{font-size:24px;margin:10px 0 10px}
+.path p{color:var(--text-dim);font-size:15px;flex:1;margin-bottom:20px}
+.path .btn{align-self:flex-start}
+
+/* ---------- rooms grid ---------- */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.grid3 h4,.tile h4{font-size:17px;margin:14px 0 4px}
+.tile{text-decoration:none;display:block}
+.tile p{font-size:13.5px;color:var(--muted)}
+
+/* ---------- featured client band ---------- */
+.feature{background:var(--console);border:1px solid var(--console-edge);border-radius:3px;overflow:hidden;display:grid;grid-template-columns:1.05fr 1fr}
+.feature-body{padding:44px 40px 40px;display:flex;flex-direction:column;justify-content:center}
+.feature h2{font-size:clamp(26px,3.5vw,40px);margin:14px 0 20px;letter-spacing:-.03em}
+.feature h2 em{font-style:normal;color:var(--signal)}
+.feature p{color:var(--text-dim);font-size:15.5px;margin-bottom:14px;max-width:46ch}
+.feature .media{border:none;border-radius:0;min-height:100%}
+.feature-stats{display:flex;flex-wrap:wrap;gap:0;margin-top:26px;border-top:1px solid var(--console-edge);padding-top:22px}
+.feature-stats div{padding-right:34px;margin-right:34px;border-right:1px solid var(--console-edge)}
+.feature-stats div:last-child{border-right:none;padding-right:0;margin-right:0}
+.feature-stats strong{display:block;font-family:var(--font-data);font-weight:600;font-size:19px;color:var(--signal);letter-spacing:-.03em}
+.feature-stats span{display:block;font-family:var(--font-data);font-size:9px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted-dark);margin-top:6px}
+
+/* ---------- roster ---------- */
+.roster{display:flex;flex-wrap:wrap;gap:10px 0;align-items:center;border-top:1px solid var(--console-edge);border-bottom:1px solid var(--console-edge);padding:20px 0}
+.roster span{font-family:var(--font-display);font-weight:600;font-size:15px;color:var(--text-dim);padding:0 22px;border-right:1px solid var(--console-edge);white-space:nowrap}
+.roster span:first-child{padding-left:0}
+.roster span:last-child{border-right:none}
+
+/* ---------- cta band ---------- */
+.cta{border-top:1px solid var(--console-edge);padding:66px 0 72px;text-align:center}
+.cta h2{font-size:clamp(26px,4.2vw,42px);margin:14px auto 16px;max-width:19ch}
+.cta p{color:var(--muted);margin-bottom:28px}
+.cta .btns{justify-content:center}
+
+/* ---------- footer ---------- */
+.foot{border-top:1px solid var(--console-edge);padding:48px 0 20px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.foot h4{font-family:var(--font-data);font-size:9.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.foot a{display:block;text-decoration:none;color:var(--text-dim);font-size:14.5px;padding:4px 0}
+.foot a:hover{color:var(--signal)}
+.foot p{color:var(--text-dim);font-size:14.5px}
+.colophon{margin-top:44px;padding-top:20px;border-top:1px solid var(--console-edge);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-data);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-dark)}
+
+/* ---------- utilities ---------- */
+.mt-l{margin-top:34px}
+.mt-m{margin-top:22px}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:var(--ink);border-bottom:1px solid var(--console-edge);padding:8px 28px 20px}
+  .nav.open{display:flex}
+  .nav a{padding:12px 0;border-bottom:1px solid var(--console-edge)}
+  .navtoggle{display:block}
+  .masthead .wrap{position:relative}
+  .split,.split.wide-left,.paths,.grid3,.grid2,.foot-grid{grid-template-columns:1fr}
+  .split{gap:28px}
+  .hero .wrap{padding-top:64px;padding-bottom:60px}
+  .section{padding:48px 0}
+  .feature{grid-template-columns:1fr}
+  .feature-body{padding:30px 24px 32px;order:2}
+  .feature .media{order:1;aspect-ratio:16/9;min-height:0}
+  .feature-stats div{padding-right:20px;margin-right:20px}
+  .roster span{padding:0 14px 0 0;border-right:none;font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="/">BEYOND <span>STUDIOS</span></a>
+    <button class="navtoggle" aria-expanded="false" aria-controls="nav">Menu</button>
+    <nav class="nav" id="nav">
+      <a href="#booths">Photo Booths</a>
+      <a href="#studio">Studio Hire</a>
+      <a href="#work">Video</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-media">
+    <img src="img/hero.png" alt="">
+  </div>
+  <div class="wrap">
+    <p class="motto">Where great moments never fade.</p>
+    <p class="label">Vancouver, British Columbia</p>
+    <h1>Don't let the moment <em>slip away</em>.</h1>
+    <p class="lede">Book a photo booth, hire the space, or hand us the whole production. A Vancouver studio built for people who need to keep making memories.</p>
+    <div class="btns">
+      <a class="btn btn-solid" href="#booths">Book a photo booth</a>
+      <a class="btn btn-line" href="#studio">Hire the studio</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Two ways in</p>
+      <h2>What are you here for?</h2>
+    </div>
+
+    <div class="paths">
+      <article class="path">
+        <div class="media r-16x9">
+          <img src="img/_edited.avif" alt="A 360 video booth session in full swing" loading="lazy">
+        </div>
+        <div class="path-body">
+          <p class="label">Photo booths</p>
+          <h3>Rent a booth</h3>
+          <p>Classic print, luxury portrait and immersive 360 video booths that take on your brand: your colour wash, your logo on the prints, your backdrop. An attendant runs the whole session. Weekly slots across the Lower Mainland.</p>
+          <a class="btn btn-solid" href="#booths">See booth packages</a>
+        </div>
+      </article>
+
+      <article class="path">
+        <div class="media r-16x9">
+          <img src="img/d59383_d3fb8f2b41984f3a8b66968a7f3fe2ee~mv2.avif" alt="The main studio dressed for a portrait shoot" loading="lazy">
+        </div>
+        <div class="path-body">
+          <p class="label">Studio hire</p>
+          <h3>Book the space</h3>
+          <p>Paper backdrops, a full lighting kit, props and a change room, all in one room. Bring your camera and shoot. Book online in about a minute, or add on-the-day coverage while you are at it.</p>
+          <a class="btn btn-line" href="#studio">See rates and availability</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="split wide-left">
+      <div>
+        <p class="label">Why it is set up this way</p>
+        <h2 style="font-size:clamp(25px,3.6vw,36px);margin:12px 0 18px">Events never run unattended.</h2>
+        <p style="color:var(--text-dim);margin-bottom:14px">A booth at a wedding cannot be redone. If a printer jams, a camera drifts or a strip comes out wrong, the night is already over and the moment is gone for good.</p>
+        <p style="color:var(--text-dim);margin-bottom:14px">So every booth booking has an attendant on site. They set it up, keep the line moving, catch the problem before it becomes one and pack it down afterwards.</p>
+        <p style="color:var(--text-dim)">Studio hire works differently. You are welcome to run it yourself with the full lighting kit included, or ask for a technician and we will confirm availability.</p>
+      </div>
+      <div class="media r-4x3">
+        <img src="img/BeyondStudios-464.avif" alt="An attendant setting up the booth before an event" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">The booths</p>
+      <h2>Three booths, one studio</h2>
+      <p>Everything runs from one studio in Vancouver, with the gear rigged and ready and a team that travels to your venue across Metro Vancouver.</p>
+    </div>
+
+    <div class="grid3">
+      <div>
+        <div class="media r-4x3">
+          <img src="img/d59383_5e117e356e8145f7a5f028fd640efa2a~mv2.avif" alt="The classic print booth" loading="lazy">
+        </div>
+        <h4>Classic print booth</h4>
+        <p style="font-size:13.5px;color:var(--muted)">Open-air setup, instant high-quality prints and a bank of props. The crowd-pleaser for weddings and parties.</p>
+      </div>
+      <div>
+        <div class="media r-4x3">
+          <img src="img/_edited (1).avif" alt="The luxury portrait booth" loading="lazy">
+        </div>
+        <h4>Portrait print booth</h4>
+        <p style="font-size:13.5px;color:var(--muted)">A glam beauty filter, studio lighting and timeless portraits in vibrant colour or classic black and white.</p>
+      </div>
+      <div>
+        <div class="media r-4x3">
+          <img src="img/d59383_54c3c43fa64b4d76a6d98b32eb3e3d97~mv2.avif" alt="The 360 video booth" loading="lazy">
+        </div>
+        <h4>360 video booth</h4>
+        <p style="font-size:13.5px;color:var(--muted)">A slow-motion spinning stage built for brand activations and the kind of clip guests post before they leave.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="booths">
+  <div class="wrap">
+    <div class="feature">
+      <div class="feature-body">
+        <p class="label">Featured activation</p>
+        <h2>The booth behind <em>sold-out</em> brand launches.</h2>
+        <p>When a brand wants the room talking, the 360 booth goes in. On-brand prints, a custom colour wash and a reel of clips in guests' hands before the night is over.</p>
+        <p>Activations are the hardest kind of booking to get right. The setup has to read as part of the brand, the line has to keep moving, and there is no second take once the doors open.</p>
+        <p>It is the reason the booths are built the way they are: rigged, branded and staffed every single time, so a flawless night is the default rather than something we chase.</p>
+        <div class="feature-stats">
+          <div><strong>Instant</strong><span>Prints &amp; clips</span></div>
+          <div><strong>On-brand</strong><span>Colour &amp; logo</span></div>
+          <div><strong>Staffed</strong><span>Every booking</span></div>
+        </div>
+      </div>
+      <div class="media">
+        <img src="img/_edited (2).avif" alt="A portrait captured in the booth" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="label" style="margin-bottom:20px">Trusted by</p>
+    <div class="roster">
+      <span>Atelier</span>
+      <span>Maison&nbsp;Co</span>
+      <span>Lumi&egrave;re</span>
+      <span>The&nbsp;Veranda</span>
+      <span>Noir&nbsp;Events</span>
+      <span>Grandview</span>
+    </div>
+    <div class="btns mt-l">
+      <a class="btn btn-line" href="#work">See the events we have shot</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="work">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="label">Selected work</p>
+      <h2>Weddings, parties and brand activations</h2>
+      <p>Real events shot in our booths and our studio, printed on the night and delivered the same week.</p>
+    </div>
+    <div class="grid2">
+      <a class="tile" href="#contact">
+        <div class="media r-16x9">
+          <img src="img/d59383_5e117e356e8145f7a5f028fd640efa2a~mv2.avif" alt="A wedding couple at the booth" loading="lazy">
+        </div>
+        <h4>The Shing Wedding</h4>
+        <p>Classic booth &amp; portrait prints</p>
+      </a>
+      <a class="tile" href="#contact">
+        <div class="media r-16x9">
+          <img src="img/_edited.avif" alt="A 360 booth brand launch" loading="lazy">
+        </div>
+        <h4>Product Launch Night</h4>
+        <p>360 video booth activation</p>
+      </a>
+    </div>
+    <div class="btns mt-l">
+      <a class="btn btn-line" href="#contact">See all work</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="studio">
+  <div class="wrap">
+    <p class="label">Come and have a look</p>
+    <h2>The studio makes more sense in person</h2>
+    <p>Book a call, or come by and we will show you around.</p>
+    <div class="btns">
+      <a class="btn btn-solid" href="#contact">Get in touch</a>
+      <a class="btn btn-line" href="tel:+16040000000">Call the studio</a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="wordmark" style="font-size:16px;margin-bottom:6px">BEYOND <span>STUDIOS</span></div>
+        <p class="motto">Where great moments never fade.</p>
+        <p>Photo booth rental, studio hire and commercial video in Vancouver.</p>
+        <p class="mt-m"><a href="mailto:hello@beyondstudios.com" style="color:var(--signal);display:inline">hello@beyondstudios.com</a></p>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <a href="#booths">Photo booth rental</a>
+        <a href="#studio">Studio hire</a>
+        <a href="#work">Video production</a>
+        <a href="#work">Work</a>
+      </div>
+      <div>
+        <h4>Studio</h4>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact">Instagram</a>
+        <p style="font-size:13.5px;color:var(--muted);margin-top:12px">Vancouver<br>British Columbia</p>
+        <a href="tel:+16040000000">604 000 0000</a>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>&copy; 2026 Beyond Studios</span>
+      <span>Vancouver, BC</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var t=document.querySelector('.navtoggle'),n=document.getElementById('nav');
+  t.addEventListener('click',function(){
+    var open=n.classList.toggle('open');
+    t.setAttribute('aria-expanded',open);
+  });
+</script>
+</body>
+</html>

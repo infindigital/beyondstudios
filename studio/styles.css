@@ -170,15 +170,16 @@ h1,h2,h3{font-family:"Syne",sans-serif;font-weight:800;line-height:1;letter-spac
   width:260px;height:170px;border-radius:12px;overflow:hidden;pointer-events:none;
   opacity:0;scale:.86;rotate:-4deg;transition:opacity .45s var(--ease),scale .45s var(--ease),rotate .45s var(--ease);z-index:3;
 }
-.proj__art{display:block;width:100%;height:100%}
-.proj__art--1{background:linear-gradient(135deg,#c6ff3a,#4b9f2e)}
-.proj__art--2{background:linear-gradient(135deg,#7b61ff,#2a1f66)}
-.proj__art--3{background:linear-gradient(135deg,#ff7a59,#7a2d1c)}
-.proj__art--4{background:linear-gradient(135deg,#3ad7ff,#124a5c)}
+.proj__art{display:block;width:100%;height:100%;object-fit:cover}
 .proj:hover .proj__name{transform:translateX(18px);color:var(--accent)}
 .proj:hover .proj__arrow{transform:translateX(6px);color:var(--accent)}
 .proj:hover .proj__media{opacity:1;scale:1;rotate:-3deg}
-@media (hover:none){.proj__media{display:none}}
+/* touch devices: no hover, so show the cover inline above each row */
+@media (hover:none){
+  .proj{padding:22px 0}
+  .proj__media{position:static;translate:none;opacity:1;scale:1;rotate:0;
+    width:100%;height:auto;aspect-ratio:3/2;margin-bottom:18px;border:1px solid var(--line-soft)}
+}
 
 /* ======================= SERVICES ======================= */
 .services{padding:clamp(60px,8vw,110px) var(--pad);background:var(--bg-soft);border-top:1px solid var(--line-soft)}
